@@ -11,13 +11,43 @@ app = FastAPI()
 def home():
     return """
     <html>
-        <head><title>Mr. Trade Buddy - Web CMP</title></head>
-        <body style='font-family:sans-serif;text-align:center;background-color:#f1f1f1;padding:50px;'>
-            <h2>📈 பங்குCMP காண</h2>
-            <form action="/cmp" method="post">
-                <input name="symbol" placeholder="பங்கு பெயரை தமிழில்/ஆங்கிலத்தில் உள்ளிடவும்" style="padding:10px;width:250px;font-size:16px;">
-                <button type="submit" style="padding:10px;font-size:16px;">காண்பிக்கவும்</button>
-            </form>
+        <head><title>Mr. Trade Buddy - Web CMP</title>
+        <style>
+            body {
+                font-family: sans-serif;
+                background-color: #f1f1f1;
+                padding: 50px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+            .form-container {
+                background-color: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+                text-align: center;
+            }
+            input, button {
+                padding: 10px;
+                font-size: 16px;
+                margin-top: 10px;
+            }
+            input {
+                width: 250px;
+            }
+        </style>
+        </head>
+        <body>
+            <div class="form-container">
+                <h2>📈 பங்குCMP காண</h2>
+                <form action="/cmp" method="post">
+                    <input name="symbol" placeholder="பங்கு பெயரை தமிழில்/ஆங்கிலத்தில் உள்ளிடவும்">
+                    <br>
+                    <button type="submit">காண்பிக்கவும்</button>
+                </form>
+            </div>
         </body>
     </html>
     """
