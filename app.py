@@ -15,6 +15,7 @@ def home():
         <style>
             body {
                 font-family: sans-serif;
+                margin: 0;
                 background-color: #f1f1f1;
                 padding: 50px;
                 display: flex;
