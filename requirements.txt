@@ -3,3 +3,4 @@ uvicorn
 requests
 numpy==1.24.3
 git+https://github.com/upstox/upstox-python.git
+python-multipart
