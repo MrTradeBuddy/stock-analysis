@@ -2,4 +2,4 @@ fastapi
 uvicorn
 requests
 numpy
-upstox-api
+upstox-python
