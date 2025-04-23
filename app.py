@@ -29,9 +29,9 @@ def cmp_result(symbol: str = Form(...)):
         instrument = f"NSE_EQ|{symbol.upper()}"
         price_data = u.get_live_feed(instrument, LiveFeedType.MARKET_DATA)
         ltp = price_data.get('ltp', 0.0)
-        rsi = 42.3  # Dummy for UI, replace with actual logic
-        ema_trend = "Bullish"  # Dummy for UI, replace with actual logic
-        supertrend_signal = "Buy"  # Dummy for UI, replace with actual logic
+        rsi = 42.3  # Dummy for UI
+        ema_trend = "Bullish"  # Dummy for UI
+        supertrend_signal = "Buy"  # Dummy for UI
 
         return f"""
         <html>
