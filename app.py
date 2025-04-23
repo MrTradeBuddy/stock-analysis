@@ -13,15 +13,15 @@ STOCK_LIST = ["TATAMOTORS", "RELIANCE", "HDFCBANK", "INFY", "ITC"]
 # Dummy function simulating API response
 # Replace with actual Upstox API logic
 def fetch_indicator_data(symbol):
-    # You will replace this block with actual Upstox API call
+    # Replace this block with actual Upstox API call
     dummy_data = {
-        "TATAMOTORS": (42, "Bullish", "Buy"),
-        "RELIANCE": (48, "Bullish", "Buy"),
-        "HDFCBANK": (38, "Bearish", "Sell"),
-        "INFY": (53, "Neutral", "Hold"),
-        "ITC": (45, "Bullish", "Buy")
+        "TATAMOTORS": (42, "Bullish", "Buy", 1032.45),
+        "RELIANCE": (48, "Bullish", "Buy", 2924.30),
+        "HDFCBANK": (38, "Bearish", "Sell", 1531.75),
+        "INFY": (53, "Neutral", "Hold", 1420.10),
+        "ITC": (45, "Bullish", "Buy", 425.85)
     }
-    return dummy_data.get(symbol, (50, "Neutral", "Hold"))
+    return dummy_data.get(symbol, (50, "Neutral", "Hold", 100.00))
 
 @app.get("/", response_class=HTMLResponse)
 def home():
@@ -31,11 +31,12 @@ def home():
         <div style='display: flex; flex-direction: column; gap: 10px; align-items: center;'>
     """
     for symbol in STOCK_LIST:
-        rsi, ema, st = fetch_indicator_data(symbol)
+        rsi, ema, st, price = fetch_indicator_data(symbol)
         emoji = "📈" if st == "Buy" else "📉" if st == "Sell" else "💹"
         recommended_html += f"""
         <div style='border:1px solid #ddd;padding:10px 20px;border-radius:8px;width:100%;max-width:400px;'>
             {emoji} <strong>{symbol}</strong><br>
+            💰 Price: ₹{price} <br>
             RSI: {rsi} | EMA: {ema} | Supertrend: {st}
         </div>
         """
@@ -107,10 +108,7 @@ def redirect_to_cmp(symbol: str = Form(...)):
 @app.get("/cmp/{symbol}", response_class=HTMLResponse)
 def show_cmp(symbol: str):
     try:
-        ltp = 972.50
-        rsi = 42.3
-        ema_trend = "Bullish"
-        supertrend_signal = "Buy"
+        rsi, ema_trend, supertrend_signal, ltp = fetch_indicator_data(symbol.upper())
 
         return f"""
         <html>
