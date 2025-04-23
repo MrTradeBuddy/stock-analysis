@@ -25,12 +25,21 @@ def fetch_indicator_data(symbol):
 
 @app.get("/", response_class=HTMLResponse)
 def home():
-    recommended_html = "<div style='margin-top:40px;'><h3>🔥 Recommended Stocks</h3><ul style='list-style:none;padding:0;'>"
+    recommended_html = """
+    <div style='margin-top:40px;'>
+        <h3 style='text-align:center;'>🔥 Recommended Stocks</h3>
+        <div style='display: flex; flex-direction: column; gap: 10px; align-items: center;'>
+    """
     for symbol in STOCK_LIST:
         rsi, ema, st = fetch_indicator_data(symbol)
         emoji = "📈" if st == "Buy" else "📉" if st == "Sell" else "💹"
-        recommended_html += f"<li>{emoji} {symbol} - RSI: {rsi} | EMA: {ema} | Supertrend: {st}</li>"
-    recommended_html += "</ul></div>"
+        recommended_html += f"""
+        <div style='border:1px solid #ddd;padding:10px 20px;border-radius:8px;width:100%;max-width:400px;'>
+            {emoji} <strong>{symbol}</strong><br>
+            RSI: {rsi} | EMA: {ema} | Supertrend: {st}
+        </div>
+        """
+    recommended_html += "</div></div>"
 
     return f"""
     <html>
@@ -45,7 +54,7 @@ def home():
                 display: flex;
                 align-items: flex-start;
                 justify-content: center;
-                padding-top: 80px;
+                padding-top: 40px;
             }}
             .card {{
                 padding: 40px;
@@ -53,7 +62,7 @@ def home():
                 box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
                 text-align: center;
                 width: 90%;
-                max-width: 400px;
+                max-width: 500px;
                 background: #ffffff;
             }}
             input, button {{
@@ -79,7 +88,7 @@ def home():
         </head>
         <body>
             <div class="card">
-                <h2>📈 Enter stock like this: TATAMOTORS</h2>
+                <h2>📈 Enter stock like this: <strong>TATAMOTORS</strong></h2>
                 <form action="/redirect" method="post">
                     <input name="symbol" placeholder="Enter stock name in English">
                     <br>
