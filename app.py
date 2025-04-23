@@ -3,7 +3,7 @@ import requests
 import time
 import threading
 import numpy as np
-from fastapi.responses import HTMLResponse
+from fastapi.responses import HTMLResponse, RedirectResponse
 
 app = FastAPI()
 
@@ -57,7 +57,7 @@ def home():
         <body>
             <div class="card">
                 <h2>📈 Enter stock like this: TATAMOTORS</h2>
-                <form action="/cmp" method="post">
+                <form action="/redirect" method="post">
                     <input name="symbol" placeholder="Enter stock name in English">
                     <br>
                     <button type="submit">Submit</button>
@@ -67,10 +67,13 @@ def home():
     </html>
     """
 
-@app.post("/cmp", response_class=HTMLResponse)
-def cmp_result(symbol: str = Form(...)):
+@app.post("/redirect")
+def redirect_to_cmp(symbol: str = Form(...)):
+    return RedirectResponse(url=f"/cmp/{symbol.upper()}", status_code=302)
+
+@app.get("/cmp/{symbol}", response_class=HTMLResponse)
+def show_cmp(symbol: str):
     try:
-        # TEMP FIX: Using dummy CMP value
         ltp = 972.50
         rsi = 42.3
         ema_trend = "Bullish"
