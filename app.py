@@ -11,37 +11,51 @@ app = FastAPI()
 def home():
     return """
     <html>
-        <head><title>Mr. Trade Buddy - Stock Signal Tool</title>
+        <head><title>BETA - Smart Trade Interface</title>
         <style>
             html, body {
                 height: 100%;
                 margin: 0;
                 padding: 0;
-                background-color: white;
-                font-family: sans-serif;
+                background-color: #ffffff;
+                font-family: Arial, sans-serif;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: column;
             }
-            .form-container {
-                background-color: white;
-                padding: 30px;
-                border-radius: 10px;
-                box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            .card {
+                padding: 40px;
+                border-radius: 12px;
+                box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
                 text-align: center;
-                width: 100%;
+                width: 90%;
                 max-width: 400px;
-                margin: 100px auto 0 auto;
+                background: #ffffff;
             }
             input, button {
-                padding: 10px;
+                padding: 12px;
                 font-size: 16px;
-                margin-top: 10px;
+                margin-top: 12px;
+                border-radius: 6px;
+                border: 1px solid #ccc;
             }
             input {
-                width: 250px;
+                width: 100%;
+            }
+            button {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                cursor: pointer;
+            }
+            button:hover {
+                background-color: #45a049;
             }
         </style>
         </head>
         <body>
-            <div class="form-container">
+            <div class="card">
                 <h2>📈 Enter stock like this: TATAMOTORS</h2>
                 <form action="/cmp" method="post">
                     <input name="symbol" placeholder="Enter stock name in English">
