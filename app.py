@@ -11,17 +11,15 @@ app = FastAPI()
 def home():
     return """
     <html>
-        <head><title>Mr. Trade Buddy - Web CMP</title>
+        <head><title>Mr. Trade Buddy - Stock Signal Tool</title>
         <style>
             body {
                 font-family: sans-serif;
                 margin: 0;
                 background-color: #f1f1f1;
-                padding: 50px;
+                padding-top: 120px;
                 display: flex;
                 justify-content: center;
-                align-items: center;
-                height: 100vh;
             }
             .form-container {
                 background-color: white;
@@ -42,11 +40,11 @@ def home():
         </head>
         <body>
             <div class="form-container">
-                <h2>📈 பங்குCMP காண</h2>
+                <h2>📈 Enter stock like this: TATAMOTORS</h2>
                 <form action="/cmp" method="post">
-                    <input name="symbol" placeholder="பங்கு பெயரை தமிழில்/ஆங்கிலத்தில் உள்ளிடவும்">
+                    <input name="symbol" placeholder="Enter stock name in English">
                     <br>
-                    <button type="submit">காண்பிக்கவும்</button>
+                    <button type="submit">Submit</button>
                 </form>
             </div>
         </body>
@@ -64,10 +62,10 @@ def cmp_result(symbol: str = Form(...)):
 
         return f"""
         <html>
-            <head><title>CMP for {symbol.upper()}</title></head>
+            <head><title>{symbol.upper()} - Stock Info</title></head>
             <body style='font-family:sans-serif;text-align:center;background-color:#fff;padding:50px;'>
-                <h1>📊 CMP for {symbol.upper()}</h1>
-                <h2>💰 Current Price (CMP): ₹{ltp:.2f}</h2>
+                <h1>📊 Stock Info: {symbol.upper()}</h1>
+                <h2>💰 Price: ₹{ltp:.2f}</h2>
                 <p>🔵 RSI: {rsi}</p>
                 <p>🟢 EMA Trend: {ema_trend}</p>
                 <p>🟩 Supertrend: {supertrend_signal}</p>
@@ -78,5 +76,5 @@ def cmp_result(symbol: str = Form(...)):
         """
     except Exception as e:
         return f"""
-        <html><body><h3>⚠️ பங்கு தகவலை பெற முடியவில்லை: {e}</h3><a href='/'>மீண்டும் முயற்சிக்கவும்</a></body></html>
+        <html><body><h3>⚠️ Unable to fetch stock data: {e}</h3><a href='/'>Try Again</a></body></html>
         """
