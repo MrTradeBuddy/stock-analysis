@@ -16,7 +16,7 @@ def home():
             body {
                 font-family: sans-serif;
                 margin: 0;
-                background-color: #f1f1f1;
+                background-color: white;
                 padding-top: 120px;
                 display: flex;
                 justify-content: center;
@@ -79,3 +79,4 @@ def cmp_result(symbol: str = Form(...)):
         return f"""
         <html><body><h3>⚠️ Unable to fetch stock data: {e}</h3><a href='/'>Try Again</a></body></html>
         """
+
