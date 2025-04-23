@@ -13,13 +13,12 @@ def home():
     <html>
         <head><title>Mr. Trade Buddy - Stock Signal Tool</title>
         <style>
-            body {
-                font-family: sans-serif;
+            html, body {
+                height: 100%;
                 margin: 0;
+                padding: 0;
                 background-color: white;
-                padding-top: 120px;
-                display: flex;
-                justify-content: center;
+                font-family: sans-serif;
             }
             .form-container {
                 background-color: white;
@@ -27,7 +26,10 @@ def home():
                 border-radius: 10px;
                 box-shadow: 0 0 10px rgba(0,0,0,0.1);
                 text-align: center;
-                margin-top: 100px;
+                position: absolute;
+                top: 20%;
+                left: 50%;
+                transform: translate(-50%, -20%);
             }
             input, button {
                 padding: 10px;
@@ -79,4 +81,3 @@ def cmp_result(symbol: str = Form(...)):
         return f"""
         <html><body><h3>⚠️ Unable to fetch stock data: {e}</h3><a href='/'>Try Again</a></body></html>
         """
-
