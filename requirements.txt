@@ -2,4 +2,4 @@ fastapi
 uvicorn
 requests
 numpy==1.24.3
-upstox-api
+git+https://github.com/upstox/upstox-python.git
