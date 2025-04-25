@@ -1,22 +1,12 @@
 from fastapi import FastAPI, Form
 import requests
 from fastapi.responses import HTMLResponse, RedirectResponse
+import numpy as np
 
 app = FastAPI()
 
 # Sample Stocks List
 STOCK_LIST = ["TATAMOTORS", "RELIANCE", "HDFCBANK", "INFY", "ITC"]
-
-# Dummy Stock Data (Replace with Upstox logic)
-def fetch_indicator_data(symbol):
-    dummy_data = {
-        "TATAMOTORS": (42, "Bullish", "Buy", 1032.45),
-        "RELIANCE": (48, "Bullish", "Buy", 2924.30),
-        "HDFCBANK": (38, "Bearish", "Sell", 1531.75),
-        "INFY": (53, "Neutral", "Hold", 1420.10),
-        "ITC": (45, "Bullish", "Buy", 425.85)
-    }
-    return dummy_data.get(symbol, (50, "Neutral", "Hold", 100.00))
 
 # Upstox Index Data Fetcher
 def get_upstox_indices(access_token):
@@ -47,9 +37,30 @@ def get_upstox_indices(access_token):
         }
     return index_data
 
+# Fetch Real Stock Data
+def fetch_indicator_data(symbol, access_token):
+    try:
+        url = f"https://api.upstox.com/v2/market/quote/ltp?instrument_key=NSE_EQ|{symbol.upper()}"
+        headers = {
+            "Authorization": f"Bearer {access_token}"
+        }
+        res = requests.get(url, headers=headers)
+        data = res.json()
+        ltp = data["data"][f"NSE_EQ|{symbol.upper()}"]["last_price"]
+
+        dummy_rsi = np.random.randint(40, 65)
+        dummy_ema = "Bullish" if dummy_rsi > 50 else "Neutral"
+        dummy_supertrend = "Buy" if dummy_rsi > 50 else "Hold"
+
+        return dummy_rsi, dummy_ema, dummy_supertrend, ltp
+
+    except Exception as e:
+        print(f"Error fetching real data for {symbol}: {e}")
+        return 50, "Neutral", "Hold", 100.00
+
 @app.get("/", response_class=HTMLResponse)
 def home():
-    access_token = "YOUR_UPSTOX_ACCESS_TOKEN_HERE"  # Replace with valid token
+    access_token = "eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI1WEI3RkQiLCJqdGkiOiI2ODBiN2U3M2RmYjhhYTA1NGFhMWE1NDEiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaWF0IjoxNzQ1NTgzNzMxLCJpc3MiOiJ1ZGFwaS1nYXRld2F5LXNlcnZpY2UiLCJleHAiOjE3NDU2MTg0MDB9.pGHnNrLwbnwVUSXgjfqBZGsYmivZu2NJv013WY8z7hQ"
     index_data = get_upstox_indices(access_token)
 
     index_html = "<div style='margin-bottom:30px;'>"
@@ -69,7 +80,7 @@ def home():
         <div style='display: flex; flex-direction: column; gap: 10px; align-items: center;'>
     """
     for symbol in STOCK_LIST:
-        rsi, ema, st, price = fetch_indicator_data(symbol)
+        rsi, ema, st, price = fetch_indicator_data(symbol, access_token)
         emoji = "📈" if st == "Buy" else "📉" if st == "Sell" else "💹"
         recommended_html += f"""
         <div style='border:1px solid #ddd;padding:10px 20px;border-radius:8px;width:100%;max-width:400px;'>
@@ -82,7 +93,10 @@ def home():
 
     return f"""
     <html>
-        <head><title>BETA - Smart Trade Interface</title></head>
+        <head>
+            <title>BETA - Smart Trade Interface</title>
+            <meta http-equiv="refresh" content="5">
+        </head>
         <body style='font-family:Arial, sans-serif; padding: 40px;'>
             <div class="card">
                 <h2>📈 Enter stock like this: <strong>TATAMOTORS</strong></h2>
@@ -105,11 +119,12 @@ def redirect_to_cmp(symbol: str = Form(...)):
 @app.get("/cmp/{symbol}", response_class=HTMLResponse)
 def show_cmp(symbol: str):
     try:
-        rsi, ema_trend, supertrend_signal, ltp = fetch_indicator_data(symbol.upper())
+        access_token = "eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI1WEI3RkQiLCJqdGkiOiI2ODBiN2U3M2RmYjhhYTA1NGFhMWE1NDEiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaWF0IjoxNzQ1NTgzNzMxLCJpc3MiOiJ1ZGFwaS1nYXRld2F5LXNlcnZpY2UiLCJleHAiOjE3NDU2MTg0MDB9.pGHnNrLwbnwVUSXgjfqBZGsYmivZu2NJv013WY8z7hQ"
+        rsi, ema_trend, supertrend_signal, ltp = fetch_indicator_data(symbol.upper(), access_token)
 
         return f"""
         <html>
-            <head><title>{symbol.upper()} - Stock Info</title></head>
+            <head><title>{symbol.upper()} - Stock Info</title><meta http-equiv="refresh" content="5"></head>
             <body style='font-family:sans-serif;text-align:center;background-color:#ffffff;padding:50px;'>
                 <h1>📈 Stock Info: {symbol.upper()}</h1>
                 <h2>💰 Price: ₹{ltp:.2f}</h2>
