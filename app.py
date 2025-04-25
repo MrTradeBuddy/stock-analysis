@@ -72,7 +72,7 @@ def fetch_indicator_data(symbol, access_token):
 
 @app.get("/", response_class=HTMLResponse)
 def home():
-    access_token = "eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI1WEI3RkQiLCJqdGkiOiI2ODBiN2U3M2RmYjhhYTA1NGFhMWE1NDEiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaWF0IjoxNzQ1NTgzNzMxLCJpc3MiOiJ1ZGFwaS1nYXRld2F5LXNlcnZpY2UiLCJleHAiOjE3NDU2MTg0MDB9.pGHnNrLwbnwVUSXgjfqBZGsYmivZu2NJv013WY8z7hQ"
+    access_token = "eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI1WEI3RkQiLCJqdGkiOiI2ODBiODM4OTFmNWE4MTAzMjA2OTUxY2YiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaWF0IjoxNzQ1NTg1MDMzLCJpc3MiOiJ1ZGFwaS1nYXRld2F5LXNlcnZpY2UiLCJleHAiOjE3NDU2MTg0MDB9.poBbU-KCJNxfV-4n6W0q7LRU9h2gfyF2_hMgI3ah-_Y"
     index_data = get_upstox_indices(access_token)
 
     index_html = "<div style='margin-bottom:30px;'>"
@@ -131,7 +131,7 @@ def redirect_to_cmp(symbol: str = Form(...)):
 @app.get("/cmp/{symbol}", response_class=HTMLResponse)
 def show_cmp(symbol: str):
     try:
-        access_token = "eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI1WEI3RkQiLCJqdGkiOiI2ODBiN2U3M2RmYjhhYTA1NGFhMWE1NDEiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaWF0IjoxNzQ1NTgzNzMxLCJpc3MiOiJ1ZGFwaS1nYXRld2F5LXNlcnZpY2UiLCJleHAiOjE3NDU2MTg0MDB9.pGHnNrLwbnwVUSXgjfqBZGsYmivZu2NJv013WY8z7hQ"
+        access_token = "eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI1WEI3RkQiLCJqdGkiOiI2ODBiODM4OTFmNWE4MTAzMjA2OTUxY2YiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaWF0IjoxNzQ1NTg1MDMzLCJpc3MiOiJ1ZGFwaS1nYXRld2F5LXNlcnZpY2UiLCJleHAiOjE3NDU2MTg0MDB9.poBbU-KCJNxfV-4n6W0q7LRU9h2gfyF2_hMgI3ah-_Y"
         rsi, ema_trend, supertrend_signal, ltp = fetch_indicator_data(symbol.upper(), access_token)
 
         return f"""
