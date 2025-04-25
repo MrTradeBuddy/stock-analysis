@@ -142,7 +142,7 @@ def show_cmp(symbol: str):
                 <h2>💰 Price: ₹{ltp:.2f}</h2>
                 <p>🔵 RSI: {rsi}</p>
                 <p>🟢 EMA Trend: {ema_trend}</p>
-                <p>🟉 Supertrend: {supertrend_signal}</p>
+                <p>🟩 Supertrend: {supertrend_signal}</p>
                 <br>
                 <a href="/">🖙 Back</a>
             </body>
