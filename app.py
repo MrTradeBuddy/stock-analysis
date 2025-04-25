@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Form
 import requests
 from fastapi.responses import HTMLResponse, RedirectResponse
-import numpy as np
+import random
 
 app = FastAPI()
 
@@ -60,7 +60,7 @@ def fetch_indicator_data(symbol, access_token):
 
         ltp = data["data"][f"NSE_EQ|{symbol.upper()}"]["last_price"]
 
-        dummy_rsi = np.random.randint(40, 65)
+        dummy_rsi = random.randint(40, 65)
         dummy_ema = "Bullish" if dummy_rsi > 50 else "Neutral"
         dummy_supertrend = "Buy" if dummy_rsi > 50 else "Hold"
 
@@ -149,6 +149,8 @@ def show_cmp(symbol: str):
         </html>
         """
     except Exception as e:
+        import traceback
+        traceback.print_exc()
         return f"""
         <html><body><h3>⚠️ Unable to fetch stock data: {e}</h3><a href='/'>Try Again</a></body></html>
         """
