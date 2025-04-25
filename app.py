@@ -9,6 +9,7 @@ app = FastAPI()
 STOCK_LIST = ["TATAMOTORS", "RELIANCE", "HDFCBANK", "INFY", "ITC"]
 
 # Upstox Index Data Fetcher
+
 def get_upstox_indices(access_token):
     base_url = "https://api.upstox.com/v2/market/quote/ltp"
     index_keys = {
@@ -25,19 +26,25 @@ def get_upstox_indices(access_token):
     joined_keys = ",".join(index_keys.values())
     url = f"{base_url}?instrument_key={joined_keys}"
     response = requests.get(url, headers=headers)
+    if response.status_code != 200:
+        return {}
     data = response.json()
 
     index_data = {}
     for label, key in index_keys.items():
-        info = data["data"][key]
-        index_data[label] = {
-            "price": info["last_price"],
-            "change": info["change"],
-            "percent": info["change_percent"]
-        }
+        try:
+            info = data["data"][key]
+            index_data[label] = {
+                "price": info.get("last_price", 0),
+                "change": info.get("change", 0),
+                "percent": info.get("change_percent", 0)
+            }
+        except KeyError:
+            index_data[label] = {"price": 0, "change": 0, "percent": 0}
     return index_data
 
 # Fetch Real Stock Data
+
 def fetch_indicator_data(symbol, access_token):
     try:
         url = f"https://api.upstox.com/v2/market/quote/ltp?instrument_key=NSE_EQ|{symbol.upper()}"
@@ -45,7 +52,12 @@ def fetch_indicator_data(symbol, access_token):
             "Authorization": f"Bearer {access_token}"
         }
         res = requests.get(url, headers=headers)
+        if res.status_code != 200:
+            raise Exception("Upstox API Error!")
         data = res.json()
+        if f"NSE_EQ|{symbol.upper()}" not in data.get("data", {}):
+            raise Exception("Invalid Symbol or No Data")
+
         ltp = data["data"][f"NSE_EQ|{symbol.upper()}"]["last_price"]
 
         dummy_rsi = np.random.randint(40, 65)
