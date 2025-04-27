@@ -1,36 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Dashboard</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
-</head>
-<body>
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 
-    <h1>📈 Financial Dashboard</h1>
-    <div id="connection-status" class="status">Checking Connection...</div>
+app = FastAPI()
 
-    <div class="dashboard">
-        <div class="card">
-            <h2>NIFTY 50</h2>
-            <div id="nifty-price">Loading...</div>
-            <div id="nifty-status">Checking...</div>
-        </div>
+# Static files serve பண்ணணும்
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-        <div class="card">
-            <h2>BANK NIFTY</h2>
-            <div id="banknifty-price">Loading...</div>
-            <div id="banknifty-status">Checking...</div>
-        </div>
+# Templates directory
+templates = Jinja2Templates(directory="templates")
 
-        <div class="card">
-            <h2>SENSEX</h2>
-            <div id="sensex-price">Loading...</div>
-            <div id="sensex-status">Checking...</div>
-        </div>
-    </div>
-
-    <script src="/static/js/script.js"></script>
-</body>
-</html>
+# Home page route
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
