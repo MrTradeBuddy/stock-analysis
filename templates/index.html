@@ -3,38 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <title>Financial Dashboard</title>
-    <link rel="stylesheet" href="/static/css/styles.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1 class="dashboard-title">📈 Financial Dashboard</h1>
+    <h1>📈 Financial Dashboard</h1>
 
-        <div class="dashboard-grid">
-            <div class="card">
-                <h2 class="symbol">NIFTY 50</h2>
-                <p class="price" id="nifty-price">Loading...</p>
-                <p class="status" id="nifty-status">🟠 Checking...</p>
-            </div>
-
-            <div class="card">
-                <h2 class="symbol">BANK NIFTY</h2>
-                <p class="price" id="banknifty-price">Loading...</p>
-                <p class="status" id="banknifty-status">🟠 Checking...</p>
-            </div>
-
-            <div class="card">
-                <h2 class="symbol">SENSEX</h2>
-                <p class="price" id="sensex-price">Loading...</p>
-                <p class="status" id="sensex-status">🟠 Checking...</p>
-            </div>
-
-            <div class="card">
-                <h2 class="symbol">Connection</h2>
-                <p class="price" id="connection-status">🔄 Connecting...</p>
-            </div>
+    <div class="dashboard">
+        <div class="box green">
+            <h2>Up Points</h2>
+            <p>+123 (5.6%)</p>
+        </div>
+        <div class="box red">
+            <h2>Down Points</h2>
+            <p>-78 (3.2%)</p>
         </div>
     </div>
 
-    <script src="/static/js/script.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
