@@ -1,10 +1,11 @@
-
 const stocks = [
     "INFY - Infosys", 
     "TCS - Tata Consultancy", 
     "HDFCBANK - HDFC Bank", 
     "ICICIBANK - ICICI Bank", 
-    "RELIANCE - Reliance Industries"
+    "RELIANCE - Reliance Industries",
+    "SUNPHARMA - Sun Pharma",
+    "DRREDDY - Dr Reddy Labs"
 ];
 
 const searchBox = document.getElementById('searchBox');
@@ -26,7 +27,6 @@ searchBox.addEventListener('input', function() {
         div.addEventListener('click', () => {
             searchBox.value = stock;
             suggestionsBox.innerHTML = '';
-            // Future Redirection Logic (Next Stage)
         });
         suggestionsBox.appendChild(div);
     });
