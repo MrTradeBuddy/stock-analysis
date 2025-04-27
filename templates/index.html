@@ -33,6 +33,17 @@
         <span class="sentiment-title">India Market View:</span> Positive Opening Expected
     </div>
 </div>
+    <div class="market-tabs">
+    <button class="tab-button active" onclick="showMarketData('nifty')">NIFTY 50</button>
+    <button class="tab-button" onclick="showMarketData('banknifty')">BANK NIFTY</button>
+    <button class="tab-button" onclick="showMarketData('sensex')">SENSEX</button>
+    <button class="tab-button" onclick="showMarketData('giftnifty')">GIFT NIFTY</button>
+</div>
+
+<div id="market-data" class="market-data-container">
+    <!-- Dynamic Data will appear here -->
+</div>
+
 
 
 <script src="/static/script.js"></script>
