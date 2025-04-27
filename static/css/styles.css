@@ -1,46 +1,38 @@
 body {
-    background-color: #f0f2f5;
-    font-family: 'Poppins', sans-serif;
-    margin: 0;
-    padding: 0;
-}
-
-.container {
-    padding: 30px;
-}
-
-.dashboard-title {
+    font-family: Arial, sans-serif;
+    background: #f2f2f2;
     text-align: center;
-    margin-bottom: 40px;
-    color: #333;
+    padding: 20px;
 }
 
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+h1 {
+    margin-bottom: 20px;
+}
+
+.status {
+    font-weight: bold;
+    margin-bottom: 30px;
+}
+
+.dashboard {
+    display: flex;
+    justify-content: center;
     gap: 20px;
 }
 
 .card {
-    background-color: white;
+    background: white;
     padding: 20px;
-    border-radius: 15px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    text-align: center;
+    width: 250px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.symbol {
-    font-size: 24px;
-    color: #555;
+.card h2 {
+    margin-bottom: 15px;
 }
 
-.price {
-    font-size: 32px;
-    margin: 10px 0;
-    color: #222;
-}
-
-.status {
-    font-size: 16px;
-    color: #777;
+.card div {
+    font-size: 18px;
+    margin: 5px 0;
 }
