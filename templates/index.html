@@ -3,22 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mission Memory - Dashboard</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
-
-<!-- Search Section -->
-<div class="search-container">
-    <input type="text" id="searchBox" placeholder="Search for a stock...">
-    <div class="suggestions" id="suggestions"></div>
-</div>
-
-<!-- Market Tabs --><!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
@@ -66,19 +50,7 @@
         <div class="chart-container">
             <div class="chart-section">
                 <div class="chart-placeholder">
-                    <div class="chart-line"></div>
-                    <div class="nifty-line"></div>
-                    <div class="chart-info">
-                        <div>NIFTY50</div>
-                        <div class="chart-value">24047.15</div>
-                        <div>13:14</div>
-                    </div>
-                    <div class="time-points">
-                        <div class="time-point">10:04</div>
-                        <div class="time-point">12:04</div>
-                        <div class="time-point">13:34</div>
-                        <div class="time-point">15:04</div>
-                    </div>
+                    <canvas id="priceChart" width="400" height="200"></canvas>
                 </div>
                 
                 <div class="daily-range">
@@ -229,29 +201,11 @@
             </div>
         </div>
     </div>
-</body>
-</html>
 
-<div class="market-tabs">
-    <button class="tab-button active" onclick="showMarketData('nifty')">NIFTY 50</button>
-    <button class="tab-button" onclick="showMarketData('banknifty')">BANK NIFTY</button>
-    <button class="tab-button" onclick="showMarketData('sensex')">SENSEX</button>
-    <button class="tab-button" onclick="showMarketData('giftnifty')">GIFT NIFTY</button>
-</div>
-
-<!-- Market Data -->
-<div id="market-data" class="market-data-container">
-    <!-- Dynamic Content Loads Here -->
-</div>
-
-<!-- Chart Section -->
-<div class="chart-container">
-    <canvas id="priceChart"></canvas>
-</div>
-
-<!-- Scripts -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script src="/static/script.js"></script>
+    <!-- Chart.js + Custom Script -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 
 </body>
 </html>
+
