@@ -3,15 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mission Memory - Home</title>
+    <title>Mission Memory - Dashboard</title>
     <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 
+<!-- ⭐ Search Section -->
 <div class="search-container">
     <input type="text" id="searchBox" placeholder="Search for a stock...">
     <div class="suggestions" id="suggestions"></div>
 </div>
+
+<!-- ⭐ Sentiment Section -->
 <div class="sentiment-card">
     <h2>📰 Morning Market Sentiment</h2>
     <div class="sentiment-item">
@@ -33,18 +36,23 @@
         <span class="sentiment-title">India Market View:</span> Positive Opening Expected
     </div>
 </div>
-    <div class="market-tabs">
+
+<!-- ⭐ Market Tabs -->
+<div class="market-tabs">
     <button class="tab-button active" onclick="showMarketData('nifty')">NIFTY 50</button>
     <button class="tab-button" onclick="showMarketData('banknifty')">BANK NIFTY</button>
     <button class="tab-button" onclick="showMarketData('sensex')">SENSEX</button>
     <button class="tab-button" onclick="showMarketData('giftnifty')">GIFT NIFTY</button>
 </div>
 
+<!-- ⭐ Dynamic Market Data Area -->
 <div id="market-data" class="market-data-container">
-    <!-- Dynamic Data will appear here -->
+    <h3>NIFTY 50</h3>
+    <p>Current: 24039.35</p>
+    <p>Today's High: 24365.45</p>
+    <p>Today's Low: 23847.85</p>
+    <p>Return: -0.86%</p>
 </div>
-
-
 
 <script src="/static/script.js"></script>
 
