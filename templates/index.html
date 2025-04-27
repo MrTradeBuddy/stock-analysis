@@ -8,13 +8,13 @@
 </head>
 <body>
 
-<!-- ⭐ Search Section -->
+<!-- Search Section -->
 <div class="search-container">
     <input type="text" id="searchBox" placeholder="Search for a stock...">
     <div class="suggestions" id="suggestions"></div>
 </div>
 
-<!-- ⭐ Sentiment Section -->
+<!-- Sentiment Section -->
 <div class="sentiment-card">
     <h2>📰 Morning Market Sentiment</h2>
     <div class="sentiment-item">
@@ -37,7 +37,7 @@
     </div>
 </div>
 
-<!-- ⭐ Market Tabs -->
+<!-- Market Tabs -->
 <div class="market-tabs">
     <button class="tab-button active" onclick="showMarketData('nifty')">NIFTY 50</button>
     <button class="tab-button" onclick="showMarketData('banknifty')">BANK NIFTY</button>
@@ -45,13 +45,9 @@
     <button class="tab-button" onclick="showMarketData('giftnifty')">GIFT NIFTY</button>
 </div>
 
-<!-- ⭐ Dynamic Market Data Area -->
+<!-- Market Data -->
 <div id="market-data" class="market-data-container">
-    <h3>NIFTY 50</h3>
-    <p>Current: 24039.35</p>
-    <p>Today's High: 24365.45</p>
-    <p>Today's Low: 23847.85</p>
-    <p>Return: -0.86%</p>
+    <!-- Dynamic Content Loads Here -->
 </div>
 
 <script src="/static/script.js"></script>
