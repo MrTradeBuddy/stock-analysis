@@ -1,13 +1,14 @@
 from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles   # 👉 இது முக்கியம்
+from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-# ⭐ இது தான் Static files serve பண்ண
+# Static Files Mount
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+# Templates Directory
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
