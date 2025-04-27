@@ -5,10 +5,10 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-# ⭐ Mount static directory
+# Mount Static Directory
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# ⭐ Load templates
+# Setup Template Folder
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
