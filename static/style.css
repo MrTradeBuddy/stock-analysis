@@ -8,7 +8,6 @@ body {
     margin: 0;
 }
 
-/* Search */
 .search-container {
     margin-top: 20px;
     text-align: center;
@@ -30,7 +29,7 @@ input[type="text"] {
     width: 400px;
     background: #f0f4f8;
     border-radius: 12px;
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.15);
     text-align: center;
 }
 
@@ -51,7 +50,6 @@ input[type="text"] {
 
 .sentiment-title {
     font-weight: bold;
-    color: #2c3e50;
 }
 
 /* Tabs */
@@ -59,7 +57,7 @@ input[type="text"] {
     display: flex;
     justify-content: center;
     margin-top: 30px;
-    gap: 10px;
+    gap: 12px;
 }
 
 .tab-button {
@@ -83,13 +81,33 @@ input[type="text"] {
     color: white;
 }
 
-/* Market Data */
+/* Market Data Container */
 .market-data-container {
     margin-top: 20px;
-    padding: 20px;
-    width: 350px;
-    background: #f9fbfc;
+    padding: 30px;
+    width: 400px;
+    background: #ffffff;
     border-radius: 12px;
-    box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 8px 25px rgba(0, 0, 0, 0.1);
     text-align: center;
+}
+
+.market-data-container h3 {
+    font-size: 28px;
+    margin-bottom: 15px;
+}
+
+.market-data-container p {
+    margin: 8px 0;
+    font-size: 18px;
+}
+
+.positive {
+    color: green;
+    font-weight: bold;
+}
+
+.negative {
+    color: red;
+    font-weight: bold;
 }
