@@ -1,19 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mission Memory - Home</title>
-    <link rel="stylesheet" href="/static/style.css">
-</head>
-<body>
+from fastapi import FastAPI, Request
+from fastapi.responses import HTMLResponse
+from fastapi.staticfiles import StaticFiles
+from fastapi.templating import Jinja2Templates
 
-<div class="search-container">
-    <input type="text" id="searchBox" placeholder="Search for a stock...">
-    <div class="suggestions" id="suggestions"></div>
-</div>
+app = FastAPI()
 
-<script src="/static/script.js"></script>
+# Static Files Serve
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
-</body>
-</html>
+# Templates Serve
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/", response_class=HTMLResponse)
+async def home(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
