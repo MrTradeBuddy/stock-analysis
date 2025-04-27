@@ -3,13 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <title>Financial Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', path='css/reset.css') }}">
-    <link rel="stylesheet" href="{{ url_for('static', path='css/styles.css') }}">
+    <link rel="stylesheet" href="/static/css/styles.css">
 </head>
 <body>
-    <h1>Welcome to Financial Dashboard</h1>
-    <div id="market-data"></div>
+    <div class="container">
+        <h1 class="dashboard-title">📈 Financial Dashboard</h1>
 
-    <script src="{{ url_for('static', path='js/script.js') }}"></script>
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2 class="symbol">NIFTY 50</h2>
+                <p class="price" id="nifty-price">Loading...</p>
+                <p class="status" id="nifty-status">🟠 Checking...</p>
+            </div>
+
+            <div class="card">
+                <h2 class="symbol">BANK NIFTY</h2>
+                <p class="price" id="banknifty-price">Loading...</p>
+                <p class="status" id="banknifty-status">🟠 Checking...</p>
+            </div>
+
+            <div class="card">
+                <h2 class="symbol">SENSEX</h2>
+                <p class="price" id="sensex-price">Loading...</p>
+                <p class="status" id="sensex-status">🟠 Checking...</p>
+            </div>
+
+            <div class="card">
+                <h2 class="symbol">Connection</h2>
+                <p class="price" id="connection-status">🔄 Connecting...</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/js/script.js"></script>
 </body>
 </html>
