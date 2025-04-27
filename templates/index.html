@@ -4,41 +4,20 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
-        <!-- API Status -->
-        <div class="api-status" id="apiStatus">Checking API Connection...</div>
-
-        <!-- Search Bar -->
         <div class="search-container">
             <input type="text" placeholder="Search stocks..." aria-label="Search">
         </div>
 
-        <!-- Stock Indices Cards -->
-        <div class="indices-row">
-            <div class="index-card">
-                <div class="index-name">Nifty 50</div>
-                <div class="index-value" id="niftyValue">--</div>
-                <div class="index-change" id="niftyChange">--</div>
-            </div>
-            <div class="index-card">
-                <div class="index-name">Bank Nifty</div>
-                <div class="index-value" id="bankNiftyValue">--</div>
-                <div class="index-change" id="bankNiftyChange">--</div>
-            </div>
-            <div class="index-card">
-                <div class="index-name">Sensex</div>
-                <div class="index-value" id="sensexValue">--</div>
-                <div class="index-change" id="sensexChange">--</div>
-            </div>
-        </div>
-
-        <!-- Chart Area -->
-        <div class="chart-container">
-            <canvas id="priceChart" width="400" height="200"></canvas>
+        <!-- Example Card -->
+        <div class="index-card">
+            <div class="index-name">Nifty 50</div>
+            <div class="index-value">24,050.45</div>
+            <div class="index-change positive">+350.25 (1.45%)</div>
         </div>
     </div>
 
