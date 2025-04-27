@@ -4,208 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Financial Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
+        <!-- API Status -->
+        <div class="api-status" id="apiStatus">Checking API Connection...</div>
+
         <!-- Search Bar -->
         <div class="search-container">
-            <input type="text" placeholder="search" aria-label="Search stocks and indices">
+            <input type="text" placeholder="Search stocks..." aria-label="Search">
         </div>
-        
+
         <!-- Stock Indices Cards -->
         <div class="indices-row">
-            <!-- Nifty 50 -->
             <div class="index-card">
                 <div class="index-name">Nifty 50</div>
-                <div class="index-value">24039.35</div>
-                <div class="index-change negative arrow-down">375.05 (1.56%)</div>
+                <div class="index-value" id="niftyValue">--</div>
+                <div class="index-change" id="niftyChange">--</div>
             </div>
-            
-            <!-- Nifty Bank -->
             <div class="index-card">
-                <div class="index-name">Nifty Bank</div>
-                <div class="index-value">54664.05</div>
-                <div class="index-change negative arrow-down">537.35 (0.97%)</div>
+                <div class="index-name">Bank Nifty</div>
+                <div class="index-value" id="bankNiftyValue">--</div>
+                <div class="index-change" id="bankNiftyChange">--</div>
             </div>
-            
-            <!-- BSE Sensex -->
             <div class="index-card">
-                <div class="index-name">BSE Sensex</div>
-                <div class="index-value">79212.53</div>
-                <div class="index-change negative arrow-down">588.90 (0.74%)</div>
-            </div>
-            
-            <!-- GIFT NIFTY -->
-            <div class="index-card">
-                <div class="index-name">GIFT NIFTY</div>
-                <div class="index-value">24220</div>
-                <div class="index-change negative arrow-down">9.00 (0.04%)</div>
+                <div class="index-name">Sensex</div>
+                <div class="index-value" id="sensexValue">--</div>
+                <div class="index-change" id="sensexChange">--</div>
             </div>
         </div>
-        
-        <!-- Chart Section -->
+
+        <!-- Chart Area -->
         <div class="chart-container">
-            <div class="chart-section">
-                <div class="chart-placeholder">
-                    <canvas id="priceChart" width="400" height="200"></canvas>
-                </div>
-                
-                <div class="daily-range">
-                    <div class="low">
-                        <div>Today's Low</div>
-                        <div>₹23847.85</div>
-                    </div>
-                    <div class="high">
-                        <div>Today's High</div>
-                        <div>₹24265.45</div>
-                    </div>
-                    <div class="return">
-                        <div>Today's Return</div>
-                        <div class="negative">-0.86%</div>
-                    </div>
-                </div>
-                
-                <div class="time-filters">
-                    <div class="time-filter active">1D</div>
-                    <div class="time-filter">1W</div>
-                    <div class="time-filter">1M</div>
-                    <div class="time-filter">6M</div>
-                    <div class="time-filter">1Y</div>
-                    <div class="time-filter">5Y</div>
-                    <div class="time-filter"><i class="fa fa-gear"></i></div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Data Sections -->
-        <div class="data-sections">
-            <!-- Top Gainers / Losers Section -->
-            <div class="data-section">
-                <div class="tab-headers">
-                    <div class="tab-header active">TOP GAINERS</div>
-                    <div class="tab-header">TOP LOSERS</div>
-                </div>
-                <div class="tab-content">
-                    <ul class="stock-list">
-                        <li class="stock-item">
-                            <div class="stock-name">SBI Life</div>
-                            <div class="stock-detail">
-                                <div class="stock-price">1635.10</div>
-                                <div class="stock-change positive arrow-up">65.90 (4.20%)</div>
-                            </div>
-                        </li>
-                        <li class="stock-item">
-                            <div class="stock-name">Dr Lal Pathlabs</div>
-                            <div class="stock-detail">
-                                <div class="stock-price">2911.20</div>
-                                <div class="stock-change positive arrow-up">123.60 (4.41%)</div>
-                            </div>
-                        </li>
-                        <li class="stock-item">
-                            <div class="stock-name">Atul</div>
-                            <div class="stock-detail">
-                                <div class="stock-price">6414.50</div>
-                                <div class="stock-change positive arrow-up">182.90 (2.92%)</div>
-                            </div>
-                        </li>
-                        <li class="stock-item">
-                            <div class="stock-name">Mphasis</div>
-                            <div class="stock-detail">
-                                <div class="stock-price">2538.60</div>
-                                <div class="stock-change positive arrow-up">70.50 (2.86%)</div>
-                            </div>
-                        </li>
-                        <li class="stock-item">
-                            <div class="stock-name">Navin Fluo Intl</div>
-                            <div class="stock-detail">
-                                <div class="stock-price">4448.70</div>
-                                <div class="stock-change positive arrow-up">108.60 (2.50%)</div>
-                            </div>
-                        </li>
-                        <li class="stock-item">
-                            <div class="stock-name">Jubilant Ingrev</div>
-                            <div class="stock-detail">
-                                <div class="stock-price">695.65</div>
-                                <div class="stock-change positive arrow-up">15.80 (2.32%)</div>
-                            </div>
-                        </li>
-                    </ul>
-                    <div class="view-more">View More <i class="fa fa-angle-right"></i></div>
-                </div>
-            </div>
-            
-            <!-- Commodity Cards -->
-            <div class="commodity-cards">
-                <div class="commodity-card">
-                    <div class="commodity-name">GOLD</div>
-                    <div class="commodity-price">₹6,032.00</div>
-                    <div class="stock-change positive arrow-up">48.00 (0.04%)</div>
-                </div>
-                
-                <div class="commodity-card">
-                    <div class="commodity-name">SILVER</div>
-                    <div class="commodity-price">₹6,198.00</div>
-                    <div class="stock-change negative arrow-down">243.00 (0.25%)</div>
-                </div>
-                
-                <div class="commodity-card">
-                    <div class="commodity-name">CRUDEOIL</div>
-                    <div class="commodity-price">5,385.00</div>
-                    <div class="stock-change negative arrow-down">11.00 (0.20%)</div>
-                </div>
-                
-                <div class="commodity-card">
-                    <div class="commodity-name">NATURALGAS</div>
-                    <div class="commodity-price">267.50</div>
-                    <div class="stock-change positive arrow-up">0.40 (0.15%)</div>
-                </div>
-            </div>
-        </div>
-        
-        <!-- Oil Activity Table -->
-        <div class="activity-table">
-            <div class="activity-header">
-                <div class="activity-title">FII & DII Activity (Rs. Crs.)</div>
-                <div class="arrow-icon"><i class="fa fa-angle-right"></i></div>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Date</th>
-                            <th>Net FII</th>
-                            <th>Net DII</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>25-Apr-2025</td>
-                            <td>2,952.30</td>
-                            <td>3,539.80</td>
-                        </tr>
-                        <tr>
-                            <td>24-Apr-2025</td>
-                            <td>8,250.50</td>
-                            <td>-534.50</td>
-                        </tr>
-                        <tr>
-                            <td>23-Apr-2025</td>
-                            <td>3,332.90</td>
-                            <td>-1,234.50</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <canvas id="priceChart" width="400" height="200"></canvas>
         </div>
     </div>
 
-    <!-- Chart.js + Custom Script -->
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-
 </body>
 </html>
-
