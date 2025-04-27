@@ -1,21 +1,36 @@
-from fastapi import FastAPI, Request
-from fastapi.responses import JSONResponse
-from fastapi.templating import Jinja2Templates
-from fastapi.staticfiles import StaticFiles
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Financial Dashboard</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+<body>
 
-app = FastAPI()
-templates = Jinja2Templates(directory="templates")
-app.mount("/static", StaticFiles(directory="static"), name="static")
+    <h1>📈 Financial Dashboard</h1>
+    <div id="connection-status" class="status">Checking Connection...</div>
 
-@app.get("/")
-async def home(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    <div class="dashboard">
+        <div class="card">
+            <h2>NIFTY 50</h2>
+            <div id="nifty-price">Loading...</div>
+            <div id="nifty-status">Checking...</div>
+        </div>
 
-@app.get("/market-data")
-async def get_market_data():
-    # 👉 Here connect to Upstox API and fetch real-time data
-    return JSONResponse({
-        "nifty": {"price": 22450.55, "status": "✅ Stable"},
-        "banknifty": {"price": 47850.00, "status": "📈 Rising"},
-        "sensex": {"price": 74000.40, "status": "📉 Falling"}
-    })
+        <div class="card">
+            <h2>BANK NIFTY</h2>
+            <div id="banknifty-price">Loading...</div>
+            <div id="banknifty-status">Checking...</div>
+        </div>
+
+        <div class="card">
+            <h2>SENSEX</h2>
+            <div id="sensex-price">Loading...</div>
+            <div id="sensex-status">Checking...</div>
+        </div>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+</body>
+</html>
