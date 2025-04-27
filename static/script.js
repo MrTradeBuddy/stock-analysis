@@ -1,75 +1,55 @@
-const stocks = [
-    "INFY - Infosys",
-    "TCS - Tata Consultancy Services",
-    "HDFCBANK - HDFC Bank",
-    "ICICIBANK - ICICI Bank",
-    "RELIANCE - Reliance Industries",
-    "SUNPHARMA - Sun Pharmaceutical",
-    "DRREDDY - Dr. Reddy's Laboratories",
-    "SBIN - State Bank of India",
-    "KOTAKBANK - Kotak Mahindra Bank",
-    "AXISBANK - Axis Bank",
-    "LT - Larsen & Toubro",
-    "HCLTECH - HCL Technologies",
-    "WIPRO - Wipro",
-    "TECHM - Tech Mahindra",
-    "MARUTI - Maruti Suzuki",
-    "TITAN - Titan Company",
-    "BAJFINANCE - Bajaj Finance",
-    "BAJAJFINSV - Bajaj Finserv",
-    "TATASTEEL - Tata Steel",
-    "JSWSTEEL - JSW Steel",
-    "ULTRACEMCO - UltraTech Cement",
-    "ADANIGREEN - Adani Green Energy",
-    "ADANIENT - Adani Enterprises",
-    "COALINDIA - Coal India",
-    "ITC - ITC Limited",
-    "ASIANPAINT - Asian Paints",
-    "BRITANNIA - Britannia Industries",
-    "NESTLEIND - Nestle India",
-    "HINDUNILVR - Hindustan Unilever",
-    "BHARTIARTL - Bharti Airtel",
-    "ONGC - Oil and Natural Gas Corporation",
-    "NTPC - NTPC Limited",
-    "POWERGRID - Power Grid Corporation",
-    "DIVISLAB - Divi's Laboratories",
-    "APOLLOHOSP - Apollo Hospitals",
-    "EICHERMOT - Eicher Motors",
-    "M&M - Mahindra & Mahindra",
-    "HDFCLIFE - HDFC Life Insurance",
-    "ICICIPRULI - ICICI Prudential Life",
-    "SBILIFE - SBI Life Insurance",
-    "INDUSINDBK - IndusInd Bank",
-    "SHREECEM - Shree Cement",
-    "HEROMOTOCO - Hero MotoCorp",
-    "BAJAJ-AUTO - Bajaj Auto",
-    "CIPLA - Cipla Limited",
-    "TATAMOTORS - Tata Motors",
-    "BPCL - Bharat Petroleum",
-    "IOC - Indian Oil Corporation",
-    "GRASIM - Grasim Industries"
-];
-
-const searchBox = document.getElementById('searchBox');
-const suggestionsBox = document.getElementById('suggestions');
-
-searchBox.addEventListener('input', function() {
-    const input = searchBox.value.toUpperCase();
-    suggestionsBox.innerHTML = '';
-
-    if (input.length === 0) {
-        return;
+const marketContent = {
+    nifty: {
+        name: "NIFTY 50",
+        current: 24039.35,
+        high: 24365.45,
+        low: 23847.85,
+        return: -0.86
+    },
+    banknifty: {
+        name: "BANK NIFTY",
+        current: 54664.05,
+        high: 55000.00,
+        low: 54000.00,
+        return: -0.97
+    },
+    sensex: {
+        name: "SENSEX",
+        current: 79212.53,
+        high: 80000.00,
+        low: 78800.00,
+        return: -0.74
+    },
+    giftnifty: {
+        name: "GIFT NIFTY",
+        current: 24220.00,
+        high: 24350.00,
+        low: 24100.00,
+        return: -0.04
     }
+};
 
-    const filteredStocks = stocks.filter(stock => stock.toUpperCase().includes(input));
+function showMarketData(market) {
+    const data = marketContent[market];
+    const container = document.getElementById('market-data');
 
-    filteredStocks.forEach(stock => {
-        const div = document.createElement('div');
-        div.textContent = stock;
-        div.addEventListener('click', () => {
-            searchBox.value = stock;
-            suggestionsBox.innerHTML = '';
-        });
-        suggestionsBox.appendChild(div);
-    });
-});
+    const returnClass = data.return >= 0 ? "positive" : "negative";
+    const arrow = data.return >= 0 ? "▲" : "▼";
+
+    container.innerHTML = `
+        <h3>${data.name}</h3>
+        <p>Current: <b>${data.current}</b></p>
+        <p>Today's High: ${data.high}</p>
+        <p>Today's Low: ${data.low}</p>
+        <p class="${returnClass}">Return: ${arrow} ${Math.abs(data.return)}%</p>
+    `;
+
+    const buttons = document.querySelectorAll('.tab-button');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    document.querySelector(`button[onclick="showMarketData('${market}')"]`).classList.add('active');
+}
+
+// Default Load
+window.onload = function() {
+    showMarketData('nifty');
+};
