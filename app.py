@@ -5,10 +5,10 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-# ⭐ static files serve பண்ணுறது இதுதான் முக்கியம்
+# Static files serve பண்ணறது - இதுவே முக்கியம் (இதான் உன் பிழை காரணம்!)
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# ⭐ templates connect
+# Templates pointing
 templates = Jinja2Templates(directory="templates")
 
 @app.get("/", response_class=HTMLResponse)
