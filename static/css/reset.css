@@ -1,6 +1,0 @@
-/* Basic Reset */
-body, h1, h2, p, div {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
