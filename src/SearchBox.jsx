@@ -1,67 +1,42 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-export default function SearchBox({ onSelect }) {
+function SearchBox() {
   const [query, setQuery] = useState("");
-  const [suggest, setSuggest] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
 
-  useEffect(() => {
-    console.log("Query Changed:", query); // ✨ Check 1
+  const handleSearch = async (e) => {
+    const value = e.target.value;
+    setQuery(value);
 
-    if (query.length < 2) {
-      setSuggest([]);
-      return;
-    }
-
-    const id = setTimeout(async () => {
+    if (value.length > 1) {
       try {
-        console.log("Calling API for:", query); // ✨ Check 2
-        const { data } = await axios.get(`https://stock-analysis-4dvn.onrender.com/search?q=${query}`);
-        console.log("Received Data:", data); // ✨ Check 3
-        setSuggest(data);
+        const { data } = await axios.get(`https://stock-analysis-4dvn.onrender.com/search?q=${value}`);
+        setSuggestions(data); // Dynamic API Response
       } catch (error) {
-        console.error("API Error:", error); // ✨ Error Log
+        console.error("Error fetching suggestions:", error);
       }
-    }, 300);
-
-    return () => clearTimeout(id);
-  }, [query]);
+    } else {
+      setSuggestions([]);
+    }
+  };
 
   return (
-    <div style={{ position: "relative", width: "100%" }}>
+    <div className="relative">
       <input
         type="text"
-        placeholder="🔍 Search for stocks..."
         value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        style={{
-          width: "100%",
-          padding: "10px",
-          fontSize: "16px",
-          borderRadius: "10px",
-          border: "1px solid #ccc",
-          marginBottom: "10px",
-        }}
+        onChange={handleSearch}
+        placeholder="🔍 Search for stocks..."
+        className="w-full max-w-md p-3 rounded-2xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-      {suggest.length > 0 && (
-        <ul style={{
-          position: "absolute",
-          background: "white",
-          width: "100%",
-          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-          listStyleType: "none",
-          padding: "0",
-          margin: "0",
-          borderRadius: "8px",
-          zIndex: 100
-        }}>
-          {suggest.map((s) => (
-            <li
-              key={s.symbol}
-              style={{ padding: "10px", cursor: "pointer", borderBottom: "1px solid #eee" }}
-              onClick={() => onSelect?.(s)}
-            >
-              {s.symbol} - {s.name}
+
+      {/* Suggestions Dropdown */}
+      {suggestions.length > 0 && (
+        <ul className="absolute bg-white border border-gray-300 rounded-md mt-1 max-h-60 overflow-y-auto w-full">
+          {suggestions.map((stock, idx) => (
+            <li key={idx} className="p-2 hover:bg-gray-100 cursor-pointer">
+              {stock.symbol} - {stock.name}
             </li>
           ))}
         </ul>
@@ -69,3 +44,5 @@ export default function SearchBox({ onSelect }) {
     </div>
   );
 }
+
+export default SearchBox;
