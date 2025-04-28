@@ -1,26 +1,37 @@
-<div style="text-align: center; margin: 20px;">
-  <input 
-    list="companies" 
-    id="stockSearch" 
-    name="stockSearch" 
-    placeholder="🔍 Search Stocks..." 
-    style="width: 300px; padding: 10px; border: 2px solid #007BFF; border-radius: 10px; font-size: 16px;"
-  >
-  
-  <datalist id="companies"></datalist>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Financial Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
 
-<!-- JavaScript fetch -->
-<script>
-  fetch("/get_companies")
-    .then(response => response.json())
-    .then(data => {
-      const datalist = document.getElementById('companies');
-      datalist.innerHTML = ""; // clear old
-      data.companies.forEach(company => {
-        const option = document.createElement('option');
-        option.value = company;
-        datalist.appendChild(option);
-      });
-    });
-</script>
+    <h1>🚀 Financial Dashboard</h1>
+
+    <!-- 🔵 Search Box Centered -->
+    <div class="search-container">
+        <input type="text" id="searchBox" placeholder="Search Company..." />
+    </div>
+
+    <!-- 🔵 Indices Cards -->
+    <div class="indices-container">
+        <div class="index-card">
+            <div class="index-title">SENSEX</div>
+            <div class="index-value">80218.37</div>
+            <div class="index-change">+1005.84 (1.27%) 🔼</div>
+        </div>
+        <div class="index-card">
+            <div class="index-title">NIFTY</div>
+            <div class="index-value">24328.5</div>
+            <div class="index-change">+289.15 (1.20%) 🔼</div>
+        </div>
+        <div class="index-card">
+            <div class="index-title">NIFTY BANK</div>
+            <div class="index-value">55432.8</div>
+            <div class="index-change">+768.75 (1.41%) 🔼</div>
+        </div>
+    </div>
+
+</body>
+</html>
