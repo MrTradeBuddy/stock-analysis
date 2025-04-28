@@ -3,16 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <title>Financial Dashboard</title>
-    <!-- Correct way to link static files -->
+    <!-- Static CSS - Correct Path -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <h1>Financial Dashboard</h1>
+
     <div id="dashboard">
-        <!-- Here the stock/market data will come -->
+        <!-- dummy data / live data -->
     </div>
 
+    <!-- Static JS -->
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
 </body>
 </html>
