@@ -1,3 +1,5 @@
+import SearchBox from "../SearchBox";  // 📣 Correct Relative path
+
 import React, { useState, useEffect } from "react";
 
 export default function HomePage() {
@@ -60,3 +62,4 @@ export default function HomePage() {
     </div>
   );
 }
+
