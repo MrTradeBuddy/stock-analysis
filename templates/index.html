@@ -1,32 +1,26 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Financial Dashboard</title>
+<div style="text-align: center; margin: 20px;">
+  <input 
+    list="companies" 
+    id="stockSearch" 
+    name="stockSearch" 
+    placeholder="🔍 Search Stocks..." 
+    style="width: 300px; padding: 10px; border: 2px solid #007BFF; border-radius: 10px; font-size: 16px;"
+  >
+  
+  <datalist id="companies"></datalist>
+</div>
 
-  <!-- Reset & Styles -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}" />
-</head>
-<body>
-  <div class="container">
-    <!-- Search Box Centered -->
-    <div class="search-container">
-      <input
-        list="companies"
-        id="stockSearch"
-        name="stockSearch"
-        placeholder="🔍 Search Stocks..."
-        class="search-input"
-      />
-      <datalist id="companies"></datalist>
-    </div>
-
-    <!-- Rest of your dashboard here... -->
-  </div>
-
-  <!-- Script -->
-  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
-</body>
-</html>
+<!-- JavaScript fetch -->
+<script>
+  fetch("/get_companies")
+    .then(response => response.json())
+    .then(data => {
+      const datalist = document.getElementById('companies');
+      datalist.innerHTML = ""; // clear old
+      data.companies.forEach(company => {
+        const option = document.createElement('option');
+        option.value = company;
+        datalist.appendChild(option);
+      });
+    });
+</script>
