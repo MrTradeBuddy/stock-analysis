@@ -21,7 +21,41 @@ export default function SearchBox({ onSelect }) {
     return () => clearTimeout(id);
   }, [query]);
 
-  return (
+  
+    return (
+  <div style={{ position: "relative", width: "100%" }}>
+    <input
+      type="text"
+      placeholder="🔍 Search for stocks..."
+      value={query}
+      onChange={(e) => setQuery(e.target.value)}
+      style={{ width: "100%", padding: "10px", fontSize: "16px", borderRadius: "10px", border: "1px solid #ccc" }}
+    />
+    {suggest.length > 0 && (
+      <ul style={{
+        position: "absolute",
+        background: "white",
+        width: "100%",
+        boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+        listStyleType: "none",
+        padding: "0",
+        margin: "5px 0",
+        borderRadius: "8px",
+        zIndex: 100
+      }}>
+        {suggest.map((s) => (
+          <li key={s.symbol}
+            style={{ padding: "10px", cursor: "pointer", borderBottom: "1px solid #eee" }}
+            onClick={() => onSelect?.(s)}
+          >
+            {s.symbol} - {s.name}
+          </li>
+        ))}
+      </ul>
+    )}
+  </div>
+);
+
     <div>
       <input
         type="text"
