@@ -5,16 +5,15 @@ from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
-# Templates & Static mount
 templates = Jinja2Templates(directory="templates")
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# Home page
+# ✅ Home Page
 @app.get("/")
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
 
-# API endpoint for full company list
+# ✅ API Route for Company Names
 @app.get("/get_companies")
 async def get_companies():
     companies = [
