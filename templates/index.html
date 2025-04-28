@@ -3,11 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <title>📈 Financial Dashboard</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', name='static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>Welcome to Financial Dashboard 🚀</h1>
+    <h1>🚀 Welcome to Financial Dashboard!</h1>
 
-    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <p>Market Overview will be updated soon...</p>
+
+    <script src="{{ url_for('static', name='static', filename='js/script.js') }}"></script>
 </body>
 </html>
