@@ -30,3 +30,24 @@ def get_live_price(symbol: str):
             return {"error": "Symbol data not found!"}
     else:
         return {"error": response.text}
+# Add below the existing code
+
+# Sample Static Stock List
+stocks = [
+    {"symbol": "RELIANCE", "name": "Reliance Industries"},
+    {"symbol": "TCS", "name": "Tata Consultancy Services"},
+    {"symbol": "INFY", "name": "Infosys Limited"},
+    {"symbol": "HDFCBANK", "name": "HDFC Bank Limited"},
+    {"symbol": "ICICIBANK", "name": "ICICI Bank Limited"},
+    {"symbol": "SBIN", "name": "State Bank of India"},
+    {"symbol": "KOTAKBANK", "name": "Kotak Mahindra Bank"},
+]
+
+# Create Search API
+@app.get("/search")
+def search_stocks(q: str):
+    result = []
+    for stock in stocks:
+        if q.lower() in stock["symbol"].lower() or q.lower() in stock["name"].lower():
+            result.append(stock)
+    return result
