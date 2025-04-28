@@ -6,18 +6,24 @@ export default function SearchBox({ onSelect }) {
   const [suggest, setSuggest] = useState([]);
 
   useEffect(() => {
+    console.log("Query Changed:", query); // ✨ Check 1
+
     if (query.length < 2) {
       setSuggest([]);
       return;
     }
+
     const id = setTimeout(async () => {
       try {
+        console.log("Calling API for:", query); // ✨ Check 2
         const { data } = await axios.get(`https://stock-analysis-4dvn.onrender.com/search?q=${query}`);
+        console.log("Received Data:", data); // ✨ Check 3
         setSuggest(data);
       } catch (error) {
-        console.error(error);
+        console.error("API Error:", error); // ✨ Error Log
       }
     }, 300);
+
     return () => clearTimeout(id);
   }, [query]);
 
