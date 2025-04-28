@@ -5,12 +5,13 @@ from fastapi.templating import Jinja2Templates
 
 app = FastAPI()
 
-# ✅ Mount static directory correctly
+# Static folder mount
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
-# ✅ Tell fastapi where your HTML templates are
+# Templates folder set
 templates = Jinja2Templates(directory="templates")
 
+# Home page route
 @app.get("/", response_class=HTMLResponse)
 async def home(request: Request):
     return templates.TemplateResponse("index.html", {"request": request})
