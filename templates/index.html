@@ -2,25 +2,15 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>📈 Financial Dashboard</title>
+    <title>Financial Dashboard</title>
+    <!-- Correct way to link static files -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/reset.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
-    <h1>📈 Financial Dashboard</h1>
-
-    <div class="dashboard">
-        <div class="card green">
-            <h2>Up Points</h2>
-            <p>150</p>
-            <p>+2.5%</p>
-        </div>
-
-        <div class="card red">
-            <h2>Down Points</h2>
-            <p>80</p>
-            <p>-1.2%</p>
-        </div>
+    <h1>Financial Dashboard</h1>
+    <div id="dashboard">
+        <!-- Here the stock/market data will come -->
     </div>
 
     <script src="{{ url_for('static', filename='js/script.js') }}"></script>
