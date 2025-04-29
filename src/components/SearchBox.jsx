@@ -1,57 +1,73 @@
-import React, { useState } from "react";
-import axios from "axios";
+from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
+import requests
+import os
 
-function SearchBox() {
-  const [query, setQuery] = useState("");
-  const [suggestions, setSuggestions] = useState([]);
+app = FastAPI()
 
-  const handleSearch = async (e) => {
-    const value = e.target.value;
-    setQuery(value);
+# ✅ Enable CORS for all origins (can restrict to specific domain)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Or use specific domains like ["https://opthub.onrender.com"]
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-    if (value.length > 1) {
-      try {
-        const response = await axios.get("https://stock-analysis-4dvn.onrender.com/search", {
-          params: { q: value },
-        });
-        console.log("✅ Suggestions from API:", response.data);
-        setSuggestions(response.data);
-      } catch (error) {
-        console.error("❌ API Error:", error);
-      }
-    } else {
-      setSuggestions([]);
+# ✅ API Credentials from environment variables
+UPSTOX_API_KEY = os.getenv("29293c26-f228-4b54-a52c-2aabd500d385")
+UPSTOX_ACCESS_TOKEN = os.getenv("eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ...")
+
+# ✅ Static Stock List
+stocks = [
+    {"symbol": "RELIANCE", "name": "Reliance Industries"},
+    {"symbol": "TCS", "name": "Tata Consultancy Services"},
+    {"symbol": "TATAMOTORS", "name": "Tata Motors"},
+    {"symbol": "TATASTEEL", "name": "Tata Steel"},
+    {"symbol": "TATAPOWER", "name": "Tata Power"},
+    {"symbol": "ADANIENT", "name": "Adani Enterprises"},
+    {"symbol": "ADANIPORTS", "name": "Adani Ports"},
+    {"symbol": "INFY", "name": "Infosys Limited"},
+    {"symbol": "ICICIBANK", "name": "ICICI Bank"},
+    {"symbol": "HDFCBANK", "name": "HDFC Bank"},
+    {"symbol": "SBIN", "name": "State Bank of India"},
+    {"symbol": "AXISBANK", "name": "Axis Bank"},
+    {"symbol": "KOTAKBANK", "name": "Kotak Mahindra Bank"},
+    {"symbol": "ITC", "name": "ITC Limited"},
+    {"symbol": "LT", "name": "Larsen & Toubro"},
+]
+
+@app.get("/")
+def read_root():
+    return {"message": "🚀 Upstox API Server is Running!"}
+
+# ✅ Live Price API
+@app.get("/liveprice/{symbol}")
+def get_live_price(symbol: str):
+    headers = {
+        "x-api-key": UPSTOX_API_KEY,
+        "Authorization": f"Bearer {UPSTOX_ACCESS_TOKEN}"
     }
-  };
+    url = f"https://api.upstox.com/v2/market-quote/ltp?symbol=NSE_EQ:{symbol}"
 
-  return (
-    <div className="relative w-full max-w-md mx-auto">
-      <input
-        type="text"
-        value={query}
-        onChange={handleSearch}
-        placeholder="🔍 Search for stocks..."
-        className="w-full p-3 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
-      />
-      {suggestions.length > 0 && (
-        <ul className="absolute left-0 right-0 bg-white mt-1 border border-gray-300 rounded-md max-h-60 overflow-y-auto z-10">
-          {suggestions.map((stock, index) => (
-            <li
-              key={index}
-              className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-              onClick={() => {
-                setQuery(`${stock.symbol}`);
-                setSuggestions([]);
-                console.log("🟢 Selected:", stock);
-              }}
-            >
-              {stock.symbol} - {stock.name}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-}
+    response = requests.get(url, headers=headers)
 
-export default SearchBox;
+    if response.status_code == 200:
+        data = response.json()
+        try:
+            ltp = data['data'][f'NSE_EQ:{symbol}']['last_price']
+            return {"symbol": symbol, "ltp": ltp}
+        except KeyError:
+            return {"error": "Symbol data not found!"}
+    else:
+        return {"error": response.text}
+
+# ✅ Smart Search API
+@app.get("/search")
+def search_stocks(q: str):
+    q_lower = q.lower()
+    results = [
+        stock for stock in stocks
+        if q_lower in stock["symbol"].lower() or q_lower in stock["name"].lower()
+    ]
+    return results
