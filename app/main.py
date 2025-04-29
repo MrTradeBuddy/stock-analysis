@@ -1,12 +1,22 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 import requests
 import os
 
 app = FastAPI()
 
+# ✅ Enable CORS for all origins (can restrict to specific domain)
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # Or use ["https://opthub.onrender.com"] to restrict
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 # ✅ API Credentials from environment variables
 UPSTOX_API_KEY = os.getenv("29293c26-f228-4b54-a52c-2aabd500d385")
-UPSTOX_ACCESS_TOKEN = os.getenv("eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI1WEI3RkQiLCJqdGkiOiI2ODBmNmM1ODlkZTNiMjNiZDA2YmM2NTIiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaWF0IjoxNzQ1ODQxMjQwLCJpc3MiOiJ1ZGFwaS1nYXRld2F5LXNlcnZpY2UiLCJleHAiOjE3NDU4Nzc2MDB9.fJyHYH_S19GVjfBSJHpXlQ4YxBx-cW_SphIMgUxEDIo")
+UPSTOX_ACCESS_TOKEN = os.getenv("eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ...")
 
 # ✅ Static Stock List
 stocks = [
