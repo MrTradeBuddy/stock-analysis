@@ -17,21 +17,24 @@ function SearchBox() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
-  const handleSearch = (e) => {
-    const value = e.target.value;
-    setQuery(value);
+  import axios from "axios";  // ✅ Import axios first
 
-    if (value.length > 1) {
-      const filtered = stocks.filter(
-        (stock) =>
-          stock.symbol.toLowerCase().includes(value.toLowerCase()) ||
-          stock.name.toLowerCase().includes(value.toLowerCase())
-      );
-      setSuggestions(filtered);
-    } else {
-      setSuggestions([]);
+const handleSearch = async (e) => {
+  const value = e.target.value;
+  setQuery(value);
+
+  if (value.length > 1) {
+    try {
+      const response = await axios.get(`https://stock-analysis-4dvn.onrender.com/search?q=${value}`);
+      setSuggestions(response.data);
+    } catch (err) {
+      console.error("❌ Error fetching suggestions:", err);
     }
-  };
+  } else {
+    setSuggestions([]);
+  }
+};
+
 
   return (
     <div className="relative w-full max-w-md mx-auto">
