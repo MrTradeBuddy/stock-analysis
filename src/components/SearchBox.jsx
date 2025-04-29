@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
 function SearchBox() {
@@ -11,12 +11,13 @@ function SearchBox() {
 
     if (value.length > 1) {
       try {
-        const res = await axios.get(`https://stock-analysis-4dvn.onrender.com/search?q=${value}`);
-        setSuggestions(res.data);
-        console.log("🔎 Suggestions:", res.data);
-      } catch (err) {
-        console.error("❌ Error:", err);
-        setSuggestions([]);
+        const response = await axios.get("https://stock-analysis-4dvn.onrender.com/search", {
+          params: { q: value },
+        });
+        console.log("✅ Suggestions from API:", response.data);
+        setSuggestions(response.data);
+      } catch (error) {
+        console.error("❌ API Error:", error);
       }
     } else {
       setSuggestions([]);
@@ -32,14 +33,17 @@ function SearchBox() {
         placeholder="🔍 Search for stocks..."
         className="w-full p-3 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-
       {suggestions.length > 0 && (
         <ul className="absolute left-0 right-0 bg-white mt-1 border border-gray-300 rounded-md max-h-60 overflow-y-auto z-10">
           {suggestions.map((stock, index) => (
             <li
               key={index}
               className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-              onClick={() => setQuery(`${stock.symbol} - ${stock.name}`)}
+              onClick={() => {
+                setQuery(`${stock.symbol}`);
+                setSuggestions([]);
+                console.log("🟢 Selected:", stock);
+              }}
             >
               {stock.symbol} - {stock.name}
             </li>
