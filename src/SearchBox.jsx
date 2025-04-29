@@ -8,15 +8,15 @@ function SearchBox() {
   const handleSearch = async (e) => {
     const value = e.target.value;
     setQuery(value);
-    console.log("Query Changed:", value); // ✅ Debug line
+    console.log("Query Changed:", value); // Debug
 
     if (value.length > 1) {
       try {
         const { data } = await axios.get(`https://stock-analysis-4dvn.onrender.com/search?q=${value}`);
-        console.log("Suggestions:", data); // ✅ Debug line
+        console.log("Suggestions:", data); // Debug
         setSuggestions(data);
       } catch (error) {
-        console.error("Suggestion fetch failed:", error);
+        console.error("API error:", error);
       }
     } else {
       setSuggestions([]);
@@ -24,42 +24,19 @@ function SearchBox() {
   };
 
   return (
-    <div style={{ position: "relative", width: "100%" }}>
+    <div className="relative w-full max-w-md mx-auto">
       <input
         type="text"
         value={query}
         onChange={handleSearch}
         placeholder="🔍 Search for stocks..."
-        style={{
-          width: "100%",
-          padding: "10px",
-          fontSize: "16px",
-          borderRadius: "10px",
-          border: "1px solid #ccc",
-          marginBottom: "10px",
-        }}
+        className="w-full p-3 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-      <div style={{ fontSize: "12px", color: "gray" }}>
-        {suggestions.length} results
-      </div>
       {suggestions.length > 0 && (
-        <ul style={{
-          position: "absolute",
-          background: "white",
-          width: "100%",
-          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-          listStyleType: "none",
-          padding: "0",
-          margin: "0",
-          borderRadius: "8px",
-          zIndex: 100
-        }}>
-          {suggestions.map((s, i) => (
-            <li
-              key={i}
-              style={{ padding: "10px", cursor: "pointer", borderBottom: "1px solid #eee" }}
-            >
-              {s.symbol} - {s.name}
+        <ul className="absolute left-0 right-0 bg-white mt-1 border border-gray-300 rounded-md max-h-60 overflow-y-auto z-10">
+          {suggestions.map((stock, index) => (
+            <li key={index} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+              {stock.symbol} - {stock.name}
             </li>
           ))}
         </ul>
