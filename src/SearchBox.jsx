@@ -19,20 +19,23 @@ function SearchBox() {
   const [suggestions, setSuggestions] = useState([]);
 
   const handleSearch = (e) => {
-    const value = e.target.value;
-    setQuery(value);
+  const value = e.target.value;
+  setQuery(value);
+  console.log("Query Typed:", value);  // 👈 (1st console log here)
 
-    if (value.length > 1) {
-      const filtered = stocks.filter(
-        (stock) =>
-          stock.symbol.toLowerCase().includes(value.toLowerCase()) ||
-          stock.name.toLowerCase().includes(value.toLowerCase())
-      );
-      setSuggestions(filtered);
-    } else {
-      setSuggestions([]);
-    }
-  };
+  if (value.length > 1) {
+    const filtered = stocks.filter(
+      (stock) =>
+        stock.symbol.toLowerCase().includes(value.toLowerCase()) ||
+        stock.name.toLowerCase().includes(value.toLowerCase())
+    );
+    console.log("Filtered Stocks:", filtered);  // 👈 (2nd console log here)
+    setSuggestions(filtered);
+  } else {
+    setSuggestions([]);
+  }
+};
+
 
   return (
     <div className="relative w-full max-w-md mx-auto">
