@@ -12,9 +12,9 @@ function SearchBox() {
     if (value.length > 1) {
       try {
         const { data } = await axios.get(`https://stock-analysis-4dvn.onrender.com/search?q=${value}`);
-        setSuggestions(data); // Dynamic API Response
+        setSuggestions(data);
       } catch (error) {
-        console.error("Error fetching suggestions:", error);
+        console.error("Suggestion fetch failed:", error);
       }
     } else {
       setSuggestions([]);
@@ -22,20 +22,18 @@ function SearchBox() {
   };
 
   return (
-    <div className="relative">
+    <div className="relative w-full max-w-md mx-auto">
       <input
         type="text"
         value={query}
         onChange={handleSearch}
         placeholder="🔍 Search for stocks..."
-        className="w-full max-w-md p-3 rounded-2xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        className="w-full p-3 rounded-xl border border-gray-300 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-
-      {/* Suggestions Dropdown */}
       {suggestions.length > 0 && (
-        <ul className="absolute bg-white border border-gray-300 rounded-md mt-1 max-h-60 overflow-y-auto w-full">
-          {suggestions.map((stock, idx) => (
-            <li key={idx} className="p-2 hover:bg-gray-100 cursor-pointer">
+        <ul className="absolute left-0 right-0 bg-white mt-1 border border-gray-300 rounded-md max-h-60 overflow-y-auto z-10">
+          {suggestions.map((stock, index) => (
+            <li key={index} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
               {stock.symbol} - {stock.name}
             </li>
           ))}
