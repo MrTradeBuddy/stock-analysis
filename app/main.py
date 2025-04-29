@@ -46,8 +46,17 @@ stocks = [
 # Create Search API
 @app.get("/search")
 def search_stocks(q: str):
-    result = []
-    for stock in stocks:
-        if q.lower() in stock["symbol"].lower() or q.lower() in stock["name"].lower():
-            result.append(stock)
-    return result
+    stocks = [
+        {"symbol": "RELIANCE", "name": "Reliance Industries"},
+        {"symbol": "TCS", "name": "Tata Consultancy Services"},
+        {"symbol": "INFY", "name": "Infosys Limited"},
+        {"symbol": "ICICIBANK", "name": "ICICI Bank"},
+        {"symbol": "HDFCBANK", "name": "HDFC Bank"},
+        {"symbol": "SBIN", "name": "State Bank of India"},
+        {"symbol": "AXISBANK", "name": "Axis Bank"},
+        {"symbol": "KOTAKBANK", "name": "Kotak Mahindra Bank"},
+        {"symbol": "ITC", "name": "ITC Limited"},
+        {"symbol": "LT", "name": "Larsen & Toubro"},
+    ]
+    results = [s for s in stocks if q.lower() in s["symbol"].lower() or q.lower() in s["name"].lower()]
+    return results
