@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SearchBox from "../SearchBox"; // ✅ Added import
+import SearchBox from "./SearchBox"; // ✅ (because now in same folder)
 
 export default function HomePage() {
   const [time, setTime] = useState(new Date());
@@ -27,10 +27,10 @@ export default function HomePage() {
         className="mb-6"
       />
 
-      {/* 🔍 Search Box Component */}
-      <SearchBox /> {/* ✅ Changed from <input> to component */}
+      {/* Search Box */}
+      <SearchBox />
 
-      {/* 📊 Indices Cards */}
+      {/* Indices Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl mt-8">
         {indices.map((index) => (
           <div
@@ -46,7 +46,7 @@ export default function HomePage() {
         ))}
       </div>
 
-      {/* ⏰ Last Updated */}
+      {/* Last Updated */}
       <p className="text-gray-400 text-sm mt-6">
         Last updated at {time.toLocaleString()}
       </p>
