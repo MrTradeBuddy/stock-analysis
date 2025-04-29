@@ -1,23 +1,34 @@
 import React, { useState } from "react";
-import axios from "axios";
+
+// ✅ Static Stocks Data
+const stocks = [
+  { symbol: "RELIANCE", name: "Reliance Industries" },
+  { symbol: "TCS", name: "Tata Consultancy Services" },
+  { symbol: "INFY", name: "Infosys Limited" },
+  { symbol: "ICICIBANK", name: "ICICI Bank" },
+  { symbol: "HDFCBANK", name: "HDFC Bank" },
+  { symbol: "SBIN", name: "State Bank of India" },
+  { symbol: "AXISBANK", name: "Axis Bank" },
+  { symbol: "KOTAKBANK", name: "Kotak Mahindra Bank" },
+  { symbol: "ITC", name: "ITC Limited" },
+  { symbol: "LT", name: "Larsen & Toubro" },
+];
 
 function SearchBox() {
   const [query, setQuery] = useState("");
   const [suggestions, setSuggestions] = useState([]);
 
-  const handleSearch = async (e) => {
+  const handleSearch = (e) => {
     const value = e.target.value;
     setQuery(value);
-    console.log("Query Changed:", value); // Debug
 
     if (value.length > 1) {
-      try {
-        const { data } = await axios.get(`https://stock-analysis-4dvn.onrender.com/search?q=${value}`);
-        console.log("Suggestions:", data); // Debug
-        setSuggestions(data);
-      } catch (error) {
-        console.error("API error:", error);
-      }
+      const filtered = stocks.filter(
+        (stock) =>
+          stock.symbol.toLowerCase().includes(value.toLowerCase()) ||
+          stock.name.toLowerCase().includes(value.toLowerCase())
+      );
+      setSuggestions(filtered);
     } else {
       setSuggestions([]);
     }
