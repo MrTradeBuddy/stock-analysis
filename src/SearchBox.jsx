@@ -1,4 +1,5 @@
-import SearchBox from "../SearchBox";
+import SearchBox from "./components/SearchBox";
+
 import React, { useState, useEffect } from "react";
 
 export default function HomePage() {
