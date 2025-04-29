@@ -21,7 +21,8 @@ function SearchBox() {
   const handleSearch = (e) => {
   const value = e.target.value;
   setQuery(value);
-  console.log("Query Typed:", value);  // 👈 (1st console log here)
+
+  console.log("📝 Typed Value:", value);  // ✅ Console Log 1
 
   if (value.length > 1) {
     const filtered = stocks.filter(
@@ -29,12 +30,14 @@ function SearchBox() {
         stock.symbol.toLowerCase().includes(value.toLowerCase()) ||
         stock.name.toLowerCase().includes(value.toLowerCase())
     );
-    console.log("Filtered Stocks:", filtered);  // 👈 (2nd console log here)
+
+    console.log("🔎 Filtered Suggestions:", filtered);  // ✅ Console Log 2
     setSuggestions(filtered);
   } else {
     setSuggestions([]);
   }
 };
+
 
 
   return (
