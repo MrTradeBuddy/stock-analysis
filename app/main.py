@@ -16,7 +16,7 @@ app.add_middleware(
 
 # ✅ API Credentials from environment variables
 UPSTOX_API_KEY = os.getenv("29293c26-f228-4b54-a52c-2aabd500d385")
-UPSTOX_ACCESS_TOKEN = os.getenv("eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ...")
+UPSTOX_ACCESS_TOKEN = "eyJ0eXAiOiJKV1QiLCJrZXlfaWQiOiJza192MS4wIiwiYWxnIjoiSFMyNTYifQ.eyJzdWIiOiI1WEI3RkQiLCJqdGkiOiI2ODEwY2MzOGYzMWNjZDBmMWY0NjY3Y2QiLCJpc011bHRpQ2xpZW50IjpmYWxzZSwiaWF0IjoxNzQ1OTMxMzIwLCJpc3MiOiJ1ZGFwaS1nYXRld2F5LXNlcnZpY2UiLCJleHAiOjE3NDU5NjQwMDB9.f9XLpQZjN91o593iuq4k3ztjQyTKVqs6deu0UTxKZ5Q"
 
 # ✅ Static Stock List
 stocks = [
@@ -63,6 +63,6 @@ def search_stocks(q: str):
     q_lower = q.lower()
     results = [
         stock for stock in stocks
-        if stock["symbol"].lower().startswith(q_lower) or q_lower in stock["name"].lower()
+        if q_lower in stock["symbol"].lower() or q_lower in stock["name"].lower()
     ]
     return results
