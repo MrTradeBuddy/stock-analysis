@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import SearchBox from "../SearchBox"; // Ensure this path is correct
+import SearchBox from "../SearchBox"; // ✅ Added import
 
 export default function HomePage() {
   const [time, setTime] = useState(new Date());
@@ -19,6 +19,7 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center p-6 space-y-6">
+
       {/* Logo */}
       <img
         src="https://via.placeholder.com/150x50?text=Your+Logo"
@@ -26,10 +27,10 @@ export default function HomePage() {
         className="mb-6"
       />
 
-      {/* Search Box */}
-      <SearchBox />
+      {/* 🔍 Search Box Component */}
+      <SearchBox /> {/* ✅ Changed from <input> to component */}
 
-      {/* Indices Cards */}
+      {/* 📊 Indices Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full max-w-6xl mt-8">
         {indices.map((index) => (
           <div
@@ -45,10 +46,11 @@ export default function HomePage() {
         ))}
       </div>
 
-      {/* Last Updated */}
+      {/* ⏰ Last Updated */}
       <p className="text-gray-400 text-sm mt-6">
         Last updated at {time.toLocaleString()}
       </p>
+
     </div>
   );
 }
